@@ -37,7 +37,7 @@ const Navbar = () => {
                   aria-current="page"
                   to="/profiles"
                 >
-                  User Profile
+                  Users Profile
                 </Link>
               </li>
               <li className="nav-item">
@@ -58,12 +58,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-// App
-// ├── Navbar
-// ├── Routes
-// │   ├── HomePage
-// │   ├── UserProfilePublic (/:username)
-// │   ├── EditProfile (Protected Route)
-// │   ├── NotFound
-// └── Footer

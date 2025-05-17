@@ -12,7 +12,7 @@ const Login = () => {
           Login with your GitHub account to continue
         </p>
         <a
-          href="http://localhost:5000/v1/auth/github"
+          href={`${import.meta.env.VITE_BACKEND_URL}/v1/auth/github`}
           className="btn btn-dark w-100"
         >
           <i className="bi bi-github me-2">

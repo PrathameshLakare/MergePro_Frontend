@@ -1,10 +1,17 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const url = import.meta.env.VITE_BACKEND_URL;
 
+export const getMyProfile = createAsyncThunk("auth/getUser", async () => {
+  const response = await axios.get(`${url}/v1/profiles/my-profile`, {
+    withCredentials: true,
+  });
+  return response.data;
+});
+
 export const createNewUser = createAsyncThunk(
-  "auth/createNewUser",
+  "profile/createNewUser",
   async () => {
     const response = await axios.post(`${url}/v1/profiles`, null, {
       withCredentials: true,
@@ -14,14 +21,26 @@ export const createNewUser = createAsyncThunk(
 );
 
 const authSlice = createSlice({
-  name: "auth",
+  name: "user",
   initialState: {
     user: null,
-    error: null,
     status: "idle",
+    error: null,
+    successMessage: null,
   },
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(getMyProfile.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(getMyProfile.fulfilled, (state, action) => {
+      state.status = "success";
+      state.user = action.payload.profile;
+    });
+    builder.addCase(getMyProfile.rejected, (state, action) => {
+      state.status = "error";
+      state.error = action.error.message;
+    });
     builder.addCase(createNewUser.pending, (state) => {
       state.status = "loading";
     });

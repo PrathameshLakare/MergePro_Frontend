@@ -1,6 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../features/auth/authSlice";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    navigate("/");
+  };
+
   return (
     <div>
       <nav
@@ -23,31 +33,27 @@ const Navbar = () => {
           <div className="collapse navbar-collapse" id="navbarNavDropdown">
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">
-                <Link
-                  className="nav-link active"
-                  aria-current="page"
-                  to="/home"
-                >
+                <Link className="nav-link active" to="/home">
                   Home
                 </Link>
               </li>
               <li className="nav-item">
-                <Link
-                  className="nav-link active"
-                  aria-current="page"
-                  to="/profiles"
-                >
+                <Link className="nav-link active" to="/profiles">
                   Users Profile
                 </Link>
               </li>
               <li className="nav-item">
-                <Link
-                  className="nav-link active"
-                  aria-current="page"
-                  to="/edit/profile"
-                >
+                <Link className="nav-link active" to="/edit/profile">
                   Edit Profile
                 </Link>
+              </li>
+              <li className="nav-item">
+                <button
+                  className="btn btn-outline-light ms-3"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
               </li>
             </ul>
           </div>

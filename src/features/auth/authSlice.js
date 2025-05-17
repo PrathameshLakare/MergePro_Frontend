@@ -20,6 +20,13 @@ export const createNewUser = createAsyncThunk(
   }
 );
 
+export const logoutUser = createAsyncThunk("profile/logout", async () => {
+  const response = await axios.post(`${url}/v1/logout`, null, {
+    withCredentials: true,
+  });
+  return response.data;
+});
+
 const authSlice = createSlice({
   name: "user",
   initialState: {
@@ -51,6 +58,17 @@ const authSlice = createSlice({
     builder.addCase(createNewUser.rejected, (state, action) => {
       state.status = "error";
       state.error = action.error.message;
+    });
+    builder.addCase(logoutUser.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(logoutUser.fulfilled, (state) => {
+      state.status = "success";
+      state.user = null;
+    });
+    builder.addCase(logoutUser.rejected, (state) => {
+      state.status = "error";
+      state.error = "Logout failed.";
     });
   },
 });

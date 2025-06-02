@@ -102,11 +102,15 @@ const UserProfiles = () => {
                 <p className="card-text">{profile.bio || "No bio yet"}</p>
                 <div className="mb-2">
                   <strong>Tags: </strong>
-                  {profile.tags.map((tag, i) => (
-                    <span key={i} className="badge bg-secondary me-1">
-                      #{tag.toUpperCase()}
-                    </span>
-                  ))}
+                  {profile.tags.length > 0 ? (
+                    profile.tags.map((tag, i) => (
+                      <span key={i} className="badge bg-secondary me-1">
+                        #{tag.toUpperCase()}
+                      </span>
+                    ))
+                  ) : (
+                    <span className="text-muted">No tags</span>
+                  )}
                 </div>
                 {profile.resumeUrl && (
                   <p className="card-text">
